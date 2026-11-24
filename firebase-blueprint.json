@@ -1,0 +1,219 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Supervisor or site manager configuration and shift defaults.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Supervisor or organization display name."
+        },
+        "projectName": {
+          "type": "string",
+          "description": "Default work site or project name."
+        },
+        "shiftStartHour": {
+          "type": "integer",
+          "description": "Default shift start hour (0-23)."
+        },
+        "shiftStartMinute": {
+          "type": "integer",
+          "description": "Default shift start minute (0-59)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp submitted via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp submitted via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "projectName",
+        "shiftStartHour",
+        "shiftStartMinute",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Worker": {
+      "title": "Worker",
+      "description": "Registered field worker in the supervisor's roster.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Worker full name."
+        },
+        "roleTitle": {
+          "type": "string",
+          "description": "Worker trade or job title."
+        },
+        "siteName": {
+          "type": "string",
+          "description": "Assigned work site name."
+        },
+        "badgeCode": {
+          "type": "string",
+          "description": "Worker badge or employee code."
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Optional phone number."
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Whether the worker is currently active on the roster."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp submitted via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp submitted via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "fullName",
+        "roleTitle",
+        "siteName",
+        "badgeCode",
+        "active",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Daily verified attendance proof entry for a worker.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner."
+        },
+        "workerId": {
+          "type": "string",
+          "description": "Referenced Worker document ID."
+        },
+        "workerName": {
+          "type": "string",
+          "description": "Denormalized worker name."
+        },
+        "roleTitle": {
+          "type": "string",
+          "description": "Denormalized worker role."
+        },
+        "siteName": {
+          "type": "string",
+          "description": "Work site where attendance was verified."
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "Calendar date in YYYY-MM-DD format."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PRESENT", "LATE", "EXCUSED", "ABSENT"],
+          "description": "Attendance status."
+        },
+        "checkInTimeLabel": {
+          "type": "string",
+          "description": "Formatted local check-in time string."
+        },
+        "checkOutTimeLabel": {
+          "type": "string",
+          "description": "Optional formatted local check-out time string."
+        },
+        "proofMethod": {
+          "type": "string",
+          "enum": ["GPS_VERIFIED", "SUPERVISOR_LOG", "PHOTO_ATTACHED"],
+          "description": "Method used to prove attendance."
+        },
+        "locationSummary": {
+          "type": "string",
+          "description": "Optional GPS coordinate or site location verification summary."
+        },
+        "photoUriString": {
+          "type": "string",
+          "description": "Optional local photo URI reference selected via Photo Picker."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional supervisor or worker proof notes."
+        },
+        "checkInTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional authoritative server timestamp of check-in."
+        },
+        "checkOutTimestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional authoritative server timestamp of check-out."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp submitted via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp submitted via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "workerId",
+        "workerName",
+        "roleTitle",
+        "siteName",
+        "dateKey",
+        "status",
+        "checkInTimeLabel",
+        "proofMethod",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User site profile and shift configuration."
+    },
+    "/users/{userId}/workers/{workerId}": {
+      "schema": {
+        "$ref": "#/entities/Worker"
+      },
+      "description": "Workers registered under the authenticated user's site."
+    },
+    "/users/{userId}/attendance_records/{recordId}": {
+      "schema": {
+        "$ref": "#/entities/AttendanceRecord"
+      },
+      "description": "Daily attendance proof records scoped to the authenticated user."
+    }
+  }
+}

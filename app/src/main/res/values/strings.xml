@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">حضور العمال</string>
+    <string name="nav_today">اليوم</string>
+    <string name="nav_history">السجل</string>
+    <string name="nav_workers">العمال</string>
+    <string name="auth_title">إثبات الحضور اليومي للعمال</string>
+    <string name="auth_subtitle">وثّق حضور وانصراف فريق العمل بالوقت الفعلي والموقع وسجّل تقاريرك بأمان في السحابة.</string>
+    <string name="sign_in_google">تسجيل الدخول عبر Google</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="default_project_name">الموقع الرئيسي</string>
+    <string name="default_supervisor_name">مشرف الموقع</string>
+</resources>

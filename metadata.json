@@ -1,0 +1,6 @@
+{
+  "name": "حضور العمال",
+  "description": "تطبيق لإثبات وتسجيل الحضور والانصراف اليومي للعمال مع توثيق الوقت والموقع وسجلات الورديات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
